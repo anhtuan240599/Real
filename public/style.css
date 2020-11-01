@@ -1,0 +1,36 @@
+#txtuserName {
+    border: solid 1px blue;
+    
+}
+#chatForm{
+    width: 100%;
+    height: 300px;
+}
+#chatForm #left {
+    width: 30%;
+    float: left;
+    background-color: dimgray;
+}
+#chatForm #right {
+    width: 70%;
+    float: left;
+    background-color: slategrey;
+}
+#listMessage{
+    height: 300px;
+    background-color: skyblue;
+}
+.textarea {
+    outline: black;
+   
+}
+#self {
+    position: absolute;
+    height: 50%;
+    width: 50%;
+    padding-top: 0%;
+    padding-left: 0%;
+    background-color: black;
+   
+    transform: translate(50%, 0%);
+}

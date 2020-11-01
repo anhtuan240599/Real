@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="main.js"></script>
+    <link rel="stylesheet" type="text/css" href="room.css" />
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="txtRoom"/>
+    <input type="button" id="btnTaoRoom" value="Tạo room"/>
+    
+    <div id="chatForm">
+        <div id="left">
+            <h3>Room đang có</h3>
+            <div id="dsRoom"></div>
+        </div>
+        <h4 id="roomHienTai">...</h4>
+        <div id="right">
+           
+            <input type="text" id="txtMessage" />
+            <input type="button" id="btnChat" value="Chat" />
+
+        </div>
+    </div>
+</body>
+</html>
