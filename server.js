@@ -1,5 +1,7 @@
 var express = require('express');
+var bodyParser = require('body-parser')
 var app = express();
+var cookieParser = require('cookie-parser')
 app.use(express.static("public"));
 app.set("view engine","ejs");
 app.set("views","./views");
@@ -8,11 +10,18 @@ var server = require("http").Server(app);
 var io = require("socket.io")(server);
 server.listen(4000);
 var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+
+app.use(bodyParser.urlencoded( {extended: true}));
+app.use(bodyParser.json());
+
+app.use(cookieParser('asdsadd'))
 
 const Chat = require('./model/Chat');
 const User = require('./model/User');
 
-var userRoute = require('./routes/user.route')
+var userRoute = require('./routes/user.route');
+const { connect } = require('http2');
 app.use ('/users',userRoute); 
 //DB config 
 const db = require('./config/key').MongoURI;
@@ -41,11 +50,21 @@ io.on("connection",function(socket){
     })
     socket.on("user-chat",function(data){
         const newChat = new Chat({
-            text : data
+            text : data,
+            
+            room : socket.Phong
         })
         newChat.save()
+        
         io.sockets.in(socket.Phong).emit("server-chat",{un : socket.id , nd : data })
     })
+
+    socket.on("user-send-message",function(data){
+            
+        io.sockets.emit("server-send-message",{un : socket.Username, nd:data})
+        
+    })
+
 
     socket.on("client-send-Username",function(data){
         if(mangUser.indexOf(data) >= 0){
@@ -76,7 +95,8 @@ io.on("connection",function(socket){
 
 
         socket.on("user-send-message",function(data){
-            io.sockets.emit("server-send-message",{un : socket.Username, nd:data});
+            io.sockets.emit("server-send-message",{un : socket.Username, nd:data})
+            
         })
 
         
@@ -97,12 +117,19 @@ io.on("connection",function(socket){
 
 
 app.get("/",function(req,res){
-    res.render("index")
+    Chat.find(function(err,data){
+        if(err){
+            res.json({kq:0});
+        } else {
+            res.render('index',{chat:data,email : req.cookies.email})
+            
+        }
+    })
 })
 
-app.get("/room",function(req,res){
-    res.render("room")
-})
+
 app.get("/main",function(req,res){
     res.render("main")
 })
+
+module.exports = connect;

@@ -17,9 +17,7 @@ socket.on("server-send-dki-thanhcong",function(data){
     $("#chatForm").show(100);
 })
 
-$("#btnSendMessage").click(function(){
-    socket.emit("user-send-message", $("#txtMessage").val());
-})
+
 
 socket.on("server-send-message",function(data){
     $("#listMessage").append("<div class='ms'>" + data.un + ":" + data.nd + "</div>");
@@ -53,6 +51,9 @@ $(document).ready(function(){
  
     $("#txtMessage").focuson(function(){
         socket.emit("stop-typing");
+    })
+    $("#btnSendMessage").click(function(){
+        socket.emit("user-send-message", $("#txtMessage").val());
     })
     
 });
